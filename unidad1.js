@@ -7,44 +7,48 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // Abrazo digital
-const btn = document.getElementById('abrazoBtn');
-const overlay = document.getElementById('abrazoOverlay');
-const cerrar = document.getElementById('cerrarBtn');
+const btn      = document.getElementById('abrazoBtn');
+const overlay  = document.getElementById('abrazoOverlay');
+const cerrar   = document.getElementById('cerrarBtn');
 const contenedor = document.getElementById('corazones');
 
 const emojis = ['💖','💗','💕','🌸','✨','💝','🌺','💞','🥰','💓','🌷','🎀'];
 
 function lanzarCorazones() {
   contenedor.innerHTML = '';
-  for (let i = 0; i < 22; i++) {
+  for (let i = 0; i < 24; i++) {
     const el = document.createElement('span');
     el.className = 'corazon';
     el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    el.style.left = Math.random() * 88 + '%';
-    el.style.bottom = '0';
-    el.style.setProperty('--dur', (1.8 + Math.random() * 2.5) + 's');
-    el.style.animationDelay = (Math.random() * 2) + 's';
+    el.style.cssText = `
+      left: ${Math.random() * 88}%;
+      bottom: 0;
+      --dur: ${1.8 + Math.random() * 2.5}s;
+      animation-delay: ${Math.random() * 2}s;
+    `;
     contenedor.appendChild(el);
   }
 }
 
-function abrir() {
+function abrirAbrazo() {
   overlay.classList.add('activo');
+  document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
   lanzarCorazones();
 }
 
-function cerrarOverlay() {
+function cerrarAbrazo() {
   overlay.classList.remove('activo');
+  document.documentElement.style.overflow = '';
   document.body.style.overflow = '';
-  contenedor.innerHTML = '';
+  setTimeout(() => { contenedor.innerHTML = ''; }, 400);
 }
 
-btn.addEventListener('click', abrir);
-cerrar.addEventListener('click', cerrarOverlay);
+btn.addEventListener('click', abrirAbrazo);
+cerrar.addEventListener('click', cerrarAbrazo);
 overlay.addEventListener('click', (e) => {
-  if (e.target === overlay) cerrarOverlay();
+  if (e.target === overlay) cerrarAbrazo();
 });
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') cerrarOverlay();
+  if (e.key === 'Escape') cerrarAbrazo();
 });
