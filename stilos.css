@@ -254,16 +254,22 @@ body {
 
 /* === OVERLAY ABRAZO === */
 .abrazo-wrap {
-  display: none;
   position: fixed;
   inset: 0;
   background: rgba(20, 5, 30, 0.82);
   z-index: 9999;
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
-.abrazo-wrap.activo { display: flex; }
+.abrazo-wrap.activo {
+  opacity: 1;
+  pointer-events: all;
+}
 
 .abrazo-card {
   background: linear-gradient(145deg, #fff0f8, #f0fdf4, #ede9fe);
